@@ -1,10 +1,5 @@
 package com.example.familyapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "family")
 public class Family {
 	private Long id;
 	private String familyName;
