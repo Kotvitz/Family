@@ -1,4 +1,4 @@
-package com.example.familyapp.model;
+package com.example.familyapp.base;
 
 import javax.persistence.*;
 
