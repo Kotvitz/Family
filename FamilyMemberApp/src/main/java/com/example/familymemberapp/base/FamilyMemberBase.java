@@ -21,5 +21,5 @@ public class FamilyMemberBase {
     private String givenName;
 
     @Column (name = "age")
-    private Integer age;
+    private int age;
 }
