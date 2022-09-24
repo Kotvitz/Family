@@ -25,6 +25,14 @@ public class Family {
 		this.setFamilyMemberList(familyMemberList);
 	}
 
+	public Family(Long id, String familyName, int nrOfInfants, int nrOfChildren, int nrOfAdults) {
+		this.setId(id);
+		this.setFamilyName(familyName);
+		this.setNrOfInfants(nrOfInfants);
+		this.setNrOfChildren(nrOfChildren);
+		this.setNrOfAdults(nrOfAdults);
+	}
+
 	public Long getId() {
 		return id;
 	}

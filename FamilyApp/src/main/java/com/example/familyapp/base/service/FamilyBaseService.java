@@ -4,11 +4,12 @@ import javax.persistence.EntityManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.familyapp.base.FamilyBase;
 import com.example.familyapp.model.Family;
-import com.example.familymemberapp.service.FamilyMemberAppService;
 
 @Service
 public class FamilyBaseService {
@@ -24,6 +25,8 @@ public class FamilyBaseService {
 
 	public Long createFamily(Family family) {
 		try {
+			FamilyBase familyBase = new FamilyBase();
+			BeanUtils.copyProperties(family, familyBase);
 			entityManager.persist(family);
 			logger.info("Family " + family.getFamilyName() + " was correctly recorded in the database.");
 			return family.getId();
@@ -35,8 +38,9 @@ public class FamilyBaseService {
 	}
 
 	public Family getFamily(Long id) {
-		Family family = entityManager.createQuery("SELECT * FROM Family WHERE id = :id", Family.class)
+		FamilyBase familyBase = entityManager.createQuery("SELECT * FROM family WHERE id = :id", FamilyBase.class)
 				.setParameter("id", id).getSingleResult();
-		return family;
+		return new Family(familyBase.getId(), familyBase.getFamilyName(), familyBase.getNrOfInfants(),
+				familyBase.getNrOfChildren(), familyBase.getNrOfAdults());
 	}
 }
