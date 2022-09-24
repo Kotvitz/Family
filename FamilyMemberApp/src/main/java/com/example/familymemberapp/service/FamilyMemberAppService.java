@@ -16,11 +16,11 @@ public class FamilyMemberAppService {
 
 	private static Logger logger = LogManager.getLogger(FamilyMemberAppService.class);
 
-	@Value("${familyMemberAppService.createMember}")
+	@Value("${familyMemberAppService.uriCreateMember}")
 	private String uriCreateMember;
 
-	@Value("${familyMemberAppService.searchMember}")
-	private String uriSearchMember;
+	@Value("${familyMemberAppService.uriSearchSpecificFamilyMember}")
+	private String uriSearchSpecificFamilyMember;
 
 	private final RestTemplate restTemplate;
 
@@ -42,7 +42,7 @@ public class FamilyMemberAppService {
 	}
 
 	public List<FamilyMember> searchFamilyMember(Long id) {
-		List<FamilyMember> memberList = restTemplate.getForObject(uriSearchMember + id.toString(), List.class);
+		List<FamilyMember> memberList = restTemplate.getForObject(uriSearchSpecificFamilyMember + id.toString(), List.class);
 		logger.info("Data of family with ID " + id.toString() + " was received.");
 		return memberList;
 	}

@@ -27,8 +27,8 @@ public class FamilyAppService {
 	@Value("${familyAppService.uriCreateMember}")
 	private String uriCreateMember;
 
-	@Value("${familyAppService.uriSearchSpecificFamily}")
-	private String uriSearchSpecificFamily;
+	@Value("${familyAppService.uriGetSpecificFamily}")
+	private String uriGetSpecificFamily;
 
 	@Value("${familyAppService.uriSearchSpecificFamilyMember}")
 	private String uriSearchSpecificFamilyMember;
@@ -63,8 +63,8 @@ public class FamilyAppService {
 	}
 
 	public Family getFamily(Long id) {
-		Family family = restTemplate.getForObject(uriSearchSpecificFamily + id.toString(), Family.class);
-		List<FamilyMember> memberList = restTemplate.getForObject(uriSearchSpecificFamilyMember + id.toString(),
+		Family family = restTemplate.getForObject(uriGetSpecificFamily + id.toString(), Family.class);
+		List<FamilyMember> memberList = restTemplate.getForObject(uriGetSpecificFamily + id.toString(),
 				List.class);
 		family.setFamilyMemberList(memberList);
 		return family;
