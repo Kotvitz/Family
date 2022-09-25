@@ -64,7 +64,7 @@ public class FamilyAppService {
 
 	public Family getFamily(Long id) {
 		Family family = restTemplate.getForObject(uriGetSpecificFamily + id.toString(), Family.class);
-		List<FamilyMember> memberList = restTemplate.getForObject(uriGetSpecificFamily + id.toString(),
+		List<FamilyMember> memberList = restTemplate.getForObject(uriSearchSpecificFamilyMember + id.toString(),
 				List.class);
 		family.setFamilyMemberList(memberList);
 		return family;
