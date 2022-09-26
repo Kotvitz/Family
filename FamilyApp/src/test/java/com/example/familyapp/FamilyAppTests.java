@@ -12,16 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.familyapp.base.service.FamilyBaseService;
 import com.example.familyapp.model.Family;
 import com.example.familyapp.service.FamilyAppService;
 import com.example.familymemberapp.model.FamilyMember;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 @ExtendWith(MockitoExtension.class)
 class FamilyAppTests {
@@ -31,9 +35,15 @@ class FamilyAppTests {
 
 	@Mock
 	ResponseEntity<?> response;
+	
+    @Mock
+    EntityManager entityManager;
 
 	@InjectMocks
 	FamilyAppService service;
+	
+    @InjectMocks
+    FamilyBaseService baseService;
 
 	@BeforeEach
 	public void init() {
@@ -66,6 +76,14 @@ class FamilyAppTests {
 		assertEquals(2, family.getNrOfAdults());
 		assertEquals(1, family.getNrOfChildren());
 		assertEquals(1, family.getNrOfInfants());
+	}
+	
+	@Test
+	void testBaseCreateFamily() {
+		Family family = createFamily();
+		Long id = baseService.createFamily(family);
+		assertNotNull(id);
+		assertEquals(1L, id);
 	}
 
 	private Family createFamily() {
