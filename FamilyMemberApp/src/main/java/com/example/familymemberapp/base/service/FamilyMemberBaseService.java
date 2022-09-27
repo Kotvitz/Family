@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.familymemberapp.base.FamilyMemberBase;
 import com.example.familymemberapp.model.FamilyMember;
@@ -26,12 +27,13 @@ public class FamilyMemberBaseService {
 		this.entityManager = entityManager;
 	}
 
+	@Transactional
 	public boolean createFamilyMember(FamilyMember familyMember) {
 		try {
 			FamilyMemberBase familyMemberBase = new FamilyMemberBase();
 			BeanUtils.copyProperties(familyMember, familyMemberBase);
 			entityManager.persist(familyMemberBase);
-			logger.info("Member of family " + familyMember.getGivenName() + " was correctly recorded in the database.");
+			logger.info("Member of family " + familyMember.getFamilyName() + " was correctly recorded in the database.");
 			return true;
 		} catch (Exception e) {
 			logger.error("An error occurred while trying to record the member of family " + familyMember.getGivenName()
