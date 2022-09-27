@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.familyapp.base.FamilyBase;
 import com.example.familyapp.model.Family;
@@ -23,6 +24,7 @@ public class FamilyBaseService {
 		this.entityManager = entityManager;
 	}
 
+	@Transactional
 	public Long createFamily(Family family) {
 		try {
 			FamilyBase familyBase = new FamilyBase();
@@ -38,7 +40,7 @@ public class FamilyBaseService {
 	}
 
 	public Family getFamily(Long id) {
-		FamilyBase familyBase = entityManager.createQuery("SELECT * FROM family WHERE id = :id", FamilyBase.class)
+		FamilyBase familyBase = entityManager.createQuery("FROM FamilyBase f WHERE f.id = :id", FamilyBase.class)
 				.setParameter("id", id).getSingleResult();
 		return new Family(familyBase.getId(), familyBase.getFamilyName(), familyBase.getNrOfInfants(),
 				familyBase.getNrOfChildren(), familyBase.getNrOfAdults());
