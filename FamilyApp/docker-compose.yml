@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  app:
+    container_name: family-app
+    image: family-app
+    build: ./
+    ports:
+    - 8020:8020
+    depends_on:
+    - family-database
+    - family-member-database
+    - family-member-app
+    environment:
+      SPRING_DATASOURCE_PASSWORD: baseadmin
+      SPRING_DATASOURCE_USER: baseadmin
+      SPRING_DATASOURCE_NAME: familydb
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/familydb?autoreconnect=true
+  family-database:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: familydb
+      MYSQL_USER: baseadmin
+      MYSQL_PASSWORD: baseadmin
+  family-member-database:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: familymemberdb
+      MYSQL_USER: baseadmin
+      MYSQL_PASSWORD: baseadmin
+  family-member-app:
+    container_name: family-member-app
+    image: family-member-app
+    ports:
+    - 8020:8020
+    depends_on:
+    - family-database
+    - family-member-database
+    - app
+    environment:
+      SPRING_DATASOURCE_PASSWORD: baseadmin
+      SPRING_DATASOURCE_USER: baseadmin
+      SPRING_DATASOURCE_NAME: familymemberdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/familymemberdb?autoreconnect=true
